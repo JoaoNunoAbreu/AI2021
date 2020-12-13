@@ -53,9 +53,9 @@ public class MainContainer {
 
 	}
 
-	public void startAgentInPlatform(String name, String classpath, Object[] args) {
+	public void startAgentInPlatform(String name, String classpath) {
 		try {
-			AgentController ac = container.createNewAgent(name, classpath, args);
+			AgentController ac = container.createNewAgent(name, classpath, new Object[0]);
 			ac.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -64,65 +64,21 @@ public class MainContainer {
 
 	public static void main(String[] args) {
 		MainContainer a = new MainContainer();
-
 		try {
+			int n_estacoes = 5;
+			int n_utilizadores=10;
+
 			a.initMainContainerInPlatform("localhost", "9885", "MainContainer");
+			a.startAgentInPlatform("AgenteInterface", "Agents.Interface");
+			a.startAgentInPlatform("AgenteCentral", "Agents.Central");
 
-			// Example of Container Creation (not the main container)
-			// Create 3 different containers (separated environments) inside the
-			// Main container
+			for (int i = 0; i < n_estacoes; i++)
+				a.startAgentInPlatform("AgenteEstacao" + i, "Agents.Estacao");
+			for (int j = 0; j < n_utilizadores; j++)
+				a.startAgentInPlatform("AgenteUtilizador" + j, "Agents.Utilizador");
 
-			Object[] args_input = new Object[] { "Container1", "Container2", "Container3" };
-
-			ContainerController newcontainer0 = a.initContainerInPlatform("localhost", "9886", "Container0");
-			ContainerController newcontainer1 = a.initContainerInPlatform("localhost", "9887",
-					args_input[0].toString());
-			ContainerController newcontainer2 = a.initContainerInPlatform("localhost", "9888",
-					args_input[1].toString());
-			ContainerController newcontainer3 = a.initContainerInPlatform("localhost", "9889",
-					args_input[2].toString());
-
-			// Start Seller1 and Customer1 in Container1
-			// Start Seller2 and Customer2 in Container1
-			// Start Seller3 and Customer3 in Container1
-
-			AgentController seller1 = newcontainer1.createNewAgent("Seller1", "Agents.Seller", new Object[] {});
-			AgentController seller2 = newcontainer2.createNewAgent("Seller2", "Agents.Seller", new Object[] {});
-			AgentController seller3 = newcontainer3.createNewAgent("Seller3", "Agents.Seller", new Object[] {});
-
-			AgentController customer1 = newcontainer1.createNewAgent("Customer1", "Agents.Customer", new Object[] {});
-			AgentController customer2 = newcontainer2.createNewAgent("Customer2", "Agents.Customer", new Object[] {});
-			AgentController customer3 = newcontainer3.createNewAgent("Customer3", "Agents.Customer", new Object[] {});
-
-			seller1.start();
-			seller2.start();
-			seller3.start();
-
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			customer1.start();
-			customer2.start();
-			customer3.start();
-
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			// Start new Analyst Agent in Container1 every 10 seconds
-			AgentController analyst = newcontainer0.createNewAgent("Analyst", "Agents.Analyst", args_input);// arguments
-			analyst.start();
-
-		} catch (StaleProxyException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }
