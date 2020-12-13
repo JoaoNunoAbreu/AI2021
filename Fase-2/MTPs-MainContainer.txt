@@ -1,1 +1,1 @@
-http://mbp-de-joao.lan:7778/acc
+http://Bomba-do-JN.lan:7778/acc
