@@ -20,27 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5b6aa13-7f29-460f-88f8-b15619f203d7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/AI2021.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../trabalho.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../AI2021.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../APDescription.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/jade.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/APDescription.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MTPs-MainContainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MTPs-MainContainer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loja.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../MTPs-MainContainer.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,6 +48,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RunManager">
     <configuration name="MainContainer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -106,13 +87,29 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607894225115">
+    <state x="184" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1607894820494">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="184" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.875@0.25.1440.875" timestamp="1607894225115" />
-    <state x="208" y="41" key="SettingsEditor" timestamp="1607894270898">
+    <state x="184" y="121" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.875@0.25.1440.875" timestamp="1607894820494" />
+    <state width="1398" height="228" key="GridCell.Tab.0.bottom" timestamp="1607895635455">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="208" y="41" key="SettingsEditor/0.25.1440.875@0.25.1440.875" timestamp="1607894270898" />
+    <state width="1398" height="228" key="GridCell.Tab.0.bottom/0.25.1440.875@0.25.1440.875" timestamp="1607895635455" />
+    <state width="1398" height="228" key="GridCell.Tab.0.center" timestamp="1607895635454">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="1398" height="228" key="GridCell.Tab.0.center/0.25.1440.875@0.25.1440.875" timestamp="1607895635454" />
+    <state width="1398" height="228" key="GridCell.Tab.0.left" timestamp="1607895635454">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="1398" height="228" key="GridCell.Tab.0.left/0.25.1440.875@0.25.1440.875" timestamp="1607895635454" />
+    <state width="1398" height="228" key="GridCell.Tab.0.right" timestamp="1607895635455">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state width="1398" height="228" key="GridCell.Tab.0.right/0.25.1440.875@0.25.1440.875" timestamp="1607895635455" />
+    <state x="208" y="41" key="SettingsEditor" timestamp="1607895167169">
+      <screen x="0" y="25" width="1440" height="875" />
+    </state>
+    <state x="208" y="41" key="SettingsEditor/0.25.1440.875@0.25.1440.875" timestamp="1607895167169" />
   </component>
 </project>
