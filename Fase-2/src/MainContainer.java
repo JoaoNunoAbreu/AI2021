@@ -39,7 +39,7 @@ public class MainContainer {
 		prof.setParameter(Profile.MAIN, "true");
 		prof.setParameter(Profile.GUI, "true");
 
-		// create a main agent container
+		// Create a main agent container
 		this.container = rt.createMainContainer(prof);
 		rt.setCloseVM(true);
 	}
