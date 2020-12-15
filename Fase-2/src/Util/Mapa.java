@@ -46,60 +46,7 @@ public class Mapa {
     public void addNewEstacao(Posicao p){
         this.estacoes.put(p,num_init_bicicletas);
     }
-
-    // -----------------------------------------------------------------------------------------------------------------
-
-    /*public Posicao getRandPosition() {
-        Random rand = new Random();
-        float x = rand.nextInt(size);
-        float y = rand.nextInt(size);
-        return new Posicao(x,y);
-    }
-
-    private boolean demasiadoJuntos(Posicao posicao) {
-        int proximidade = 5; // Valor arbitrário de proximidade
-        for(Posicao p : this.estacoes.keySet()){
-            if(posicao.distanceBetween(p) < proximidade)
-                return true;
-        }
-        return false;
-    }
-
-    public void geraPosEstacoes(){
-        int tentativas = 10;
-        Posicao p = null;
-        for(int i = 0; i < num_estacoes; i++){
-            boolean valid = false;
-            for(int j = 0; j < tentativas && !valid; j++){
-                p = getRandPosition();
-                if(!demasiadoJuntos(p))
-                    valid = true;
-            }
-            if(!valid)
-                System.out.println("Não foi possível criar uma estação.");
-            else
-                this.estacoes.put(p,this.num_init_bicicletas);
-        }
-    }
-
-    public Posicao geraPosEstacao(){
-        int tentativas = 10;
-        Posicao p = null;
-        boolean valid = false;
-        for(int j = 0; j < tentativas && !valid; j++){
-            p = getRandPosition();
-            if(!demasiadoJuntos(p))
-                valid = true;
-        }
-        if(!valid)
-            System.out.println("Não foi possível criar uma estação.");
-        else
-            this.estacoes.put(p,this.num_init_bicicletas);
-        return p;
-    }*/
-
-    // -----------------------------------------------------------------------------------------------------------------
-
+    
     @Override
     public String toString() {
         return "Mapa{" +
