@@ -26,11 +26,9 @@ public class Posicao implements Serializable {
         this.y = y;
     }
 
-    public static int distanceBetween(Posicao p1, Posicao p2){
-        double x = Math.sqrt(((Math.pow((p1.x - p2.x), 2)) + (Math.pow((p1.y - p2.y), 2))));
-        return (int) x;
+    public double distanceBetween(Posicao p2){
+        return Math.sqrt(((Math.pow((x - p2.x), 2)) + (Math.pow((y - p2.y), 2))));
     }
-
 
     @Override
     public boolean equals(Object p){

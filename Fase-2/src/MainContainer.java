@@ -44,6 +44,24 @@ public class MainContainer {
 		rt.setCloseVM(true);
 	}
 
+	public void startAgentUtilizadorInPlatform(String name, String classpath) {
+		try {
+			AgentController ac = container.createNewAgent(name, classpath,  new Object[] {mapa.getEstacoes()});
+			ac.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void startAgentEstacaoInPlatform(String name, String classpath) {
+		try {
+			AgentController ac = container.createNewAgent(name, classpath,  new Object[] {mapa.getNum_init_bicicletas(),mapa.getEstacoes(),mapa.getSize()});
+			ac.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void startAgentInPlatform(String name, String classpath) {
 		try {
 			AgentController ac = container.createNewAgent(name, classpath,  new Object[] {mapa});
@@ -53,10 +71,8 @@ public class MainContainer {
 		}
 	}
 
-	public static Mapa generateMap(){
-		mapa = new Mapa(SimulationConfig.MAP_SIZE, SimulationConfig.NUM_ESTACOES, SimulationConfig.NUM_UTILIZADORES, SimulationConfig.NUM_MAX_BICICLETAS);
-		mapa.geraPosEstacoes();
-		return mapa;
+	public static void generateMap(){
+		mapa = new Mapa(SimulationConfig.MAP_SIZE, SimulationConfig.NUM_ESTACOES, SimulationConfig.NUM_MAX_BICICLETAS);
 	}
 
 	public static void main(String[] args) {
@@ -64,30 +80,28 @@ public class MainContainer {
 		try {
 			generateMap();
 			a.initMainContainerInPlatform("localhost", "9885", "MainContainer");
-			a.startAgentInPlatform("AgenteInterface", "Agents.Interface");
-			a.startAgentInPlatform("AgenteCentral", "Agents.Central");
+			a.startAgentInPlatform("Agente Interface", "Agents.Interface");
+			a.startAgentInPlatform("Agente Central", "Agents.Central");
 
-			for (int i = 0; i < SimulationConfig.NUM_ESTACOES; i++)
-				a.startAgentInPlatform("AgenteEstacao " + i, "Agents.Estacao");
+			Thread.sleep(1000);
+
+			for (int i = 0; i < SimulationConfig.NUM_ESTACOES; i++) {
+				a.startAgentEstacaoInPlatform("Agente Estacao " + i, "Agents.Estacao");
+				Thread.sleep(1000);
+			}
+			Thread.sleep(1000);
+
 			for (int j = 0; j < SimulationConfig.NUM_UTILIZADORES; j++)
-				a.startAgentInPlatform("AgenteUtilizador " + j, "Agents.Utilizador");
+				a.startAgentUtilizadorInPlatform("Agente Utilizador " + j, "Agents.Utilizador");
+
+			Thread.sleep(1000);
+
+			System.out.println("--------------------------------------------------------");
+			System.out.println(mapa.toString());
+			System.out.println("--------------------------------------------------------");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println("--------------------------------------------------------");
-		System.out.println("--------------------------------------------------------");
-		System.out.println("--------------------------------------------------------");
-		System.out.println(mapa.toString());
-		System.out.println("--------------------------------------------------------");
-		System.out.println("--------------------------------------------------------");
-		System.out.println("--------------------------------------------------------");
-
 	}
 }
