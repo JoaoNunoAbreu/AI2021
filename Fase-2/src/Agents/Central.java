@@ -1,5 +1,6 @@
 package Agents;
-import Util.InformPosition;
+import Util.InfoEstacao;
+import Util.InfoUtilizador;
 import Util.Mapa;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -9,6 +10,9 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+
+import java.io.IOException;
+import java.util.List;
 
 public class Central extends Agent {
 
@@ -44,16 +48,52 @@ public class Central extends Agent {
 		public void action() {
 			ACLMessage msg = receive();
 			if (msg != null) {
-				if (msg.getPerformative() == ACLMessage.SUBSCRIBE) {
-					try {
-						System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " registered!");
-
-						InformPosition content = (InformPosition) msg.getContentObject();
-						mapa.addNewEstacao(content.getPosition());
-
-					} catch (UnreadableException e) {
-						e.printStackTrace();
+				try {
+					if (msg.getPerformative() == ACLMessage.SUBSCRIBE) {
+						if(msg.getSender().getLocalName().contains("Estacao")){
+							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " registered!");
+							mapa.addNewEstacao((InfoEstacao) msg.getContentObject());
+						}
+						else if(msg.getSender().getLocalName().contains("Utilizador")){
+							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " registered!");
+							mapa.addUtilizadores((InfoUtilizador) msg.getContentObject());
+							mapa.decrementaBicicleta((InfoUtilizador) msg.getContentObject());
+						}
+						else{
+							System.out.println("Chegou um subscribe inválido ao Central!");
+						}
 					}
+					else if(msg.getPerformative() == ACLMessage.INFORM) {
+						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
+
+						// O utilizador ainda não chegou ao destino
+						if(!infoutilizador.getAtual().equals(infoutilizador.getDest())) {
+
+							// Atualiza a posição do utilizador no mapa
+							mapa.atualizaUtilizador((InfoUtilizador) msg.getContentObject());
+
+							// Verifica se o utilizador ultrapassou os 3/4's do trajeto
+							if(infoutilizador.distanciaPercorrida() >= infoutilizador.getDistance34()){
+								List<InfoEstacao> estacoes = mapa.getEstacoesIn(infoutilizador.getAtual());
+
+								// Informa as estações que têm o utilizador na sua APE
+								ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
+								mensagem.setContentObject(infoutilizador);
+								for(InfoEstacao ie : estacoes) {
+									if(!ie.getPosition().equals(infoutilizador.getInit()) && !ie.getPosition().equals(infoutilizador.getDest()))
+										mensagem.addReceiver(ie.getAgent());
+								}
+								myAgent.send(mensagem);
+							}
+						}
+						else{
+							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " foi removido maybeeeerererer!");
+							mapa.incrementaBicicleta((InfoUtilizador) msg.getContentObject());
+						}
+					}
+				}
+				catch (UnreadableException | IOException e) {
+					e.printStackTrace();
 				}
 			}
 			else block();

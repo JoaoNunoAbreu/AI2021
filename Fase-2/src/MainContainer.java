@@ -55,7 +55,7 @@ public class MainContainer {
 
 	public void startAgentEstacaoInPlatform(String name, String classpath) {
 		try {
-			AgentController ac = container.createNewAgent(name, classpath,  new Object[] {mapa.getNum_init_bicicletas(),mapa.getEstacoes(),mapa.getSize()});
+			AgentController ac = container.createNewAgent(name, classpath,  new Object[] {mapa.getNum_init_bicicletas(),mapa.getEstacoes(),mapa.getSize(),mapa.getNum_max_bicicletas()});
 			ac.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,7 +94,11 @@ public class MainContainer {
 			for (int j = 0; j < SimulationConfig.NUM_UTILIZADORES; j++)
 				a.startAgentUtilizadorInPlatform("Agente Utilizador " + j, "Agents.Utilizador");
 
-			Thread.sleep(1000);
+			Thread.sleep(3000);
+
+			a.startAgentUtilizadorInPlatform("Agente Utilizador Final", "Agents.Utilizador");
+
+			Thread.sleep(3000);
 
 			System.out.println("--------------------------------------------------------");
 			System.out.println(mapa.toString());

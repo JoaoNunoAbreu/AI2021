@@ -1,5 +1,7 @@
 package Agents;
-import Util.InformPosition;
+import Util.Incentivo;
+import Util.InfoEstacao;
+import Util.InfoUtilizador;
 import Util.Posicao;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -9,15 +11,16 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
 public class Estacao extends Agent {
 
-	private int num_bicicletas;
 	private List<Posicao> estacoes;
-	private InformPosition current_location;
+	private InfoEstacao infoestacao;
 
 	protected void setup() {
 		super.setup();
@@ -36,7 +39,6 @@ public class Estacao extends Agent {
 			e.printStackTrace();
 		}
 
-		this.num_bicicletas = (int) getArguments()[0];
 		this.estacoes = (List<Posicao>) getArguments()[1];
 		this.addBehaviour(new Register());
 		this.addBehaviour(new Receiver());
@@ -96,10 +98,13 @@ public class Estacao extends Agent {
 						System.out.println("Não foi possível criar esta estação...");
 					}
 					else{
-						current_location = new InformPosition(myAgent.getAID(), p);
+						int num_bicicletas = (int) getArguments()[0];
+						int max_bicicletas = (int) getArguments()[3];
+
+						infoestacao = new InfoEstacao(myAgent.getAID(), p, num_bicicletas,max_bicicletas);
 
 						ACLMessage msg = new ACLMessage(ACLMessage.SUBSCRIBE);
-						msg.setContentObject(current_location);
+						msg.setContentObject(infoestacao);
 
 						for (int i = 0; i < result.length; ++i) {
 							msg.addReceiver(result[i].getName());
@@ -126,24 +131,64 @@ public class Estacao extends Agent {
 			ACLMessage msg = receive();
 			if (msg != null) {
 				if (msg.getPerformative() == ACLMessage.REQUEST) {
-					System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName()  + " fez um aluguer!");
+					try {
+						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
+						if(infoutilizador.getInit().equals(infoestacao.getPosition())) {
+							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
 
-					if(num_bicicletas > 0){
-						System.out.println(myAgent.getAID().getLocalName() + " - Aluguer aceite!");
-						num_bicicletas--;
-						ACLMessage mensagem = msg.createReply();
-						mensagem.setPerformative(ACLMessage.CONFIRM);
+							if (infoestacao.getNum_bicicletas() > 0) {
+								System.out.println(myAgent.getAID().getLocalName() + " - Aluguer aceite!");
+								infoestacao.decrement();
+								ACLMessage mensagem = msg.createReply();
+								mensagem.setPerformative(ACLMessage.CONFIRM);
+								myAgent.send(mensagem);
+							} else {
+								System.out.println(myAgent.getAID().getLocalName() + " - Aluguer rejeitado!");
+								ACLMessage mensagem = msg.createReply();
+								mensagem.setPerformative(ACLMessage.REFUSE);
+								myAgent.send(mensagem);
+							}
+						}
+						else if(infoutilizador.getDest().equals(infoestacao.getPosition())) {
+
+							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
+
+							if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {
+								System.out.println(myAgent.getAID().getLocalName() + " - Devolução aceite!");
+								infoestacao.increment();
+								ACLMessage mensagem = msg.createReply();
+								mensagem.setPerformative(ACLMessage.CONFIRM);
+								myAgent.send(mensagem);
+							} else {
+								System.out.println(myAgent.getAID().getLocalName() + " - Devolução rejeitada!");
+								ACLMessage mensagem = msg.createReply();
+								mensagem.setPerformative(ACLMessage.REFUSE);
+								myAgent.send(mensagem);
+							}
+						}
+						else{
+							System.out.println("Estação recebeu request inválido.");
+						}
+					} catch (UnreadableException e) {
+						e.printStackTrace();
+					}
+				}
+				else if (msg.getPerformative() == ACLMessage.INFORM){
+					// Envia incentivo ao utilizador que está na sua APE
+					try {
+						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
+						ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
+						Incentivo i = new Incentivo(infoestacao.getPosition(), infoestacao.incentivo());
+						mensagem.setContentObject(i);
+						mensagem.addReceiver(infoutilizador.getAgent());
 						myAgent.send(mensagem);
 					}
-					else{
-						System.out.println(myAgent.getAID().getLocalName() + " - Aluguer não aceite!");
-						ACLMessage mensagem = msg.createReply();
-						mensagem.setPerformative(ACLMessage.REFUSE);
-						myAgent.send(mensagem);
+					catch (UnreadableException | IOException e) {
+						e.printStackTrace();
 					}
 				}
 				else{
-					System.out.println("Mensagem recebida no getLocalName() tem erro no performative (" + msg.getPerformative() + ")");
+					System.out.println("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
 				}
 			}
 			else {
