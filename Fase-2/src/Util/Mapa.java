@@ -44,6 +44,9 @@ public class Mapa implements java.io.Serializable{
         return res;
     }
 
+    public List<InfoEstacao> getEstacoes2(){
+        return estacoes;
+    }
     public int getNum_init_bicicletas() {
         return num_init_bicicletas;
     }
@@ -60,6 +63,16 @@ public class Mapa implements java.io.Serializable{
         this.utilizadores.add(i);
     }
 
+    public int getNBicicletasPorEstacao(int estacao) {
+        return estacoes.get(estacao).getNum_bicicletas();
+    }
+    public int getNRequisicoesPorEstacao(int estacao) {
+        return estacoes.get(estacao).getnRequisicoes();
+    }
+    public int getNDevolucoesPorEstacao(int estacao) {
+        return estacoes.get(estacao).getnDevolucoes();
+    }
+
     public void atualizaUtilizador(InfoUtilizador iu){
         for(int i = 0; i < utilizadores.size(); i++){
             if(utilizadores.get(i).getAgent().equals(iu.getAgent())){
@@ -72,6 +85,7 @@ public class Mapa implements java.io.Serializable{
         for(InfoEstacao e : estacoes){
             if(e.getPosition().equals(i.getInit())){
                 e.decrement();
+                e.incrementNRequesicoes();
             }
         }
     }
@@ -80,6 +94,7 @@ public class Mapa implements java.io.Serializable{
         for(InfoEstacao e : estacoes){
             if(e.getPosition().equals(i.getDest())){
                 e.increment();
+                e.incrementNDevolucoes();
             }
         }
     }

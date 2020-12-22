@@ -142,7 +142,9 @@ public class Estacao extends Agent {
 								infoestacao.decrement();
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.CONFIRM);
+
 								myAgent.send(mensagem);
+
 							} else {
 								System.out.println(myAgent.getAID().getLocalName() + " - Aluguer rejeitado!");
 								ACLMessage mensagem = msg.createReply();

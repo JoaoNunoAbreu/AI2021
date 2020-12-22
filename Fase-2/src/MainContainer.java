@@ -80,7 +80,7 @@ public class MainContainer {
 		try {
 			generateMap();
 			a.initMainContainerInPlatform("localhost", "9885", "MainContainer");
-			a.startAgentInPlatform("Agente Interface", "Agents.Interface");
+
 			a.startAgentInPlatform("Agente Central", "Agents.Central");
 
 			Thread.sleep(1000);
@@ -89,16 +89,16 @@ public class MainContainer {
 				a.startAgentEstacaoInPlatform("Agente Estacao " + i, "Agents.Estacao");
 				Thread.sleep(1000);
 			}
-			Thread.sleep(1000);
+			a.startAgentInPlatform("Agente Interface", "Agents.Interface");
+			Thread.sleep(5000);
 
-			for (int j = 0; j < SimulationConfig.NUM_UTILIZADORES; j++)
+			for (int j = 0; j < SimulationConfig.NUM_UTILIZADORES; j++) {
 				a.startAgentUtilizadorInPlatform("Agente Utilizador " + j, "Agents.Utilizador");
+				Thread.sleep(3000);
+			}
 
-			Thread.sleep(3000);
 
-			a.startAgentUtilizadorInPlatform("Agente Utilizador Final", "Agents.Utilizador");
 
-			Thread.sleep(3000);
 
 
 

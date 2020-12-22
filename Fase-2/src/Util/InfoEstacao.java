@@ -9,6 +9,8 @@ public class InfoEstacao implements java.io.Serializable {
     private int num_bicicletas;
     private int raio = 50;
     private int num_bicicletas_max;
+    private int nRequisicoes;
+    private int nDevolucoes;
 
     public InfoEstacao(AID agent, Posicao position, int num_bicicletas, int num_bicicletas_max) {
         super();
@@ -16,6 +18,8 @@ public class InfoEstacao implements java.io.Serializable {
         this.position = position;
         this.num_bicicletas = num_bicicletas;
         this.num_bicicletas_max = num_bicicletas_max;
+        this.nRequisicoes=0;
+        this.nDevolucoes=0;
     }
 
     public AID getAgent() {
@@ -56,6 +60,18 @@ public class InfoEstacao implements java.io.Serializable {
 
     public void increment(){
         this.num_bicicletas++;
+    }
+
+    public void incrementNRequesicoes() {this.nRequisicoes++;}
+
+    public void incrementNDevolucoes() {this.nDevolucoes++;}
+
+    public int getnRequisicoes() {
+        return nRequisicoes;
+    }
+
+    public int getnDevolucoes() {
+        return nDevolucoes;
     }
 
     public boolean isInside(Posicao p){
