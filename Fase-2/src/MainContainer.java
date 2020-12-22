@@ -100,9 +100,7 @@ public class MainContainer {
 
 			Thread.sleep(3000);
 
-			System.out.println("--------------------------------------------------------");
-			System.out.println(mapa.toString());
-			System.out.println("--------------------------------------------------------");
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

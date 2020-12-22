@@ -128,8 +128,10 @@ public class Utilizador extends Agent {
 							myAgent.send(mensagem);
 
 							// Apagar agente se for uma devolução
-							if(infoutilizador.getDest().equals(infoutilizador.getAtual()))
+							if(infoutilizador.getDest().equals(infoutilizador.getAtual())) {
 								myAgent.doDelete();
+								System.out.println(myAgent.getLocalName() + " foi apagado.");
+							}
 						}
 					}
 					catch (FIPAException | IOException e) {
@@ -174,8 +176,11 @@ public class Utilizador extends Agent {
 				else if(msg.getPerformative() == ACLMessage.INFORM){
 					try {
 						Incentivo i = (Incentivo) msg.getContentObject();
-						if(infoutilizador.aceitaIncentivo(i))
+						if(infoutilizador.aceitaIncentivo(i)) {
 							System.out.println(myAgent.getLocalName() + " aceitou o incentivo (" + infoutilizador.getIncentivo_max() + ") da posição " + infoutilizador.getDest());
+							String sender = msg.getSender().getLocalName();
+							estacao_destino = Integer.parseInt(String.valueOf(sender.charAt(sender.length() - 1)));
+						}
 						else
 							System.out.println(myAgent.getLocalName() + " rejeitou o incentivo (" + i.getIncentivo() + ") da posição " + i.getPosition());
 					}

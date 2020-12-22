@@ -19,7 +19,16 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5b6aa13-7f29-460f-88f8-b15619f203d7" name="Default Changelist" comment="" />
+    <list default="true" id="c5b6aa13-7f29-460f-88f8-b15619f203d7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/APDescription.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MTPs-MainContainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MTPs-MainContainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Agents/Central.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Central.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Agents/Estacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Estacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Agents/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Agents/Utilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Utilizador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainContainer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -96,5 +105,27 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser" timestamp="1608652811696">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser/0.25.1920.1055@0.25.1920.1055" timestamp="1608652811696" />
+    <state width="1878" height="899" key="GridCell.Tab.0.bottom" timestamp="1608650709807">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1878" height="899" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709807" />
+    <state width="1878" height="899" key="GridCell.Tab.0.center" timestamp="1608650709806">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1878" height="899" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709806" />
+    <state width="1878" height="899" key="GridCell.Tab.0.left" timestamp="1608650709803">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1878" height="899" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709803" />
+    <state width="1878" height="899" key="GridCell.Tab.0.right" timestamp="1608650709806">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1878" height="899" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709806" />
   </component>
 </project>

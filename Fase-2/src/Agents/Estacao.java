@@ -133,6 +133,7 @@ public class Estacao extends Agent {
 				if (msg.getPerformative() == ACLMessage.REQUEST) {
 					try {
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
+
 						if(infoutilizador.getInit().equals(infoestacao.getPosition())) {
 							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
 
@@ -150,7 +151,6 @@ public class Estacao extends Agent {
 							}
 						}
 						else if(infoutilizador.getDest().equals(infoestacao.getPosition())) {
-
 							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
 
 							if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {

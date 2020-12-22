@@ -1,10 +1,8 @@
 package Util;
 
-import Agents.Estacao;
-
 import java.util.*;
 
-public class Mapa {
+public class Mapa implements java.io.Serializable{
 
     // Tamanho do mapa
     private int size;

@@ -4,6 +4,7 @@ import Util.InfoUtilizador;
 import Util.Mapa;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -37,6 +38,7 @@ public class Central extends Agent {
 
 		this.mapa = (Mapa) getArguments()[0];
 		this.addBehaviour(new Receiver());
+		this.addBehaviour(new SendMap(this,500));
 	}
 
 	protected void takeDown() {
@@ -87,7 +89,6 @@ public class Central extends Agent {
 							}
 						}
 						else{
-							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " foi removido maybeeeerererer!");
 							mapa.incrementaBicicleta((InfoUtilizador) msg.getContentObject());
 						}
 					}
@@ -97,6 +98,38 @@ public class Central extends Agent {
 				}
 			}
 			else block();
+		}
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------------
+
+	private class SendMap extends TickerBehaviour {
+
+		public SendMap(Agent a, long period) {
+			super(a, period);
+		}
+
+		@Override
+		protected void onTick() {
+			DFAgentDescription template = new DFAgentDescription();
+			ServiceDescription sd = new ServiceDescription();
+			try {
+				sd.setType("interface");
+				template.addServices(sd);
+
+				DFAgentDescription[] result = DFService.search(myAgent, template);
+				if (result.length > 0) {
+					ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
+					for (int i = 0; i < result.length; ++i) {
+						mensagem.addReceiver(result[i].getName());
+					}
+					mensagem.setContentObject(mapa);
+					myAgent.send(mensagem);
+				}
+			}
+			catch (FIPAException | IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
