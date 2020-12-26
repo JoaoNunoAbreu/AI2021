@@ -7,12 +7,12 @@ public class InfoEstacao implements java.io.Serializable {
     private AID agent;
     private Posicao position;
     private int num_bicicletas;
-    private int raio = 50;
+    private int raio;
     private int num_bicicletas_max;
     private int nRequisicoes;
     private int nDevolucoes;
 
-    public InfoEstacao(AID agent, Posicao position, int num_bicicletas, int num_bicicletas_max) {
+    public InfoEstacao(AID agent, Posicao position, int num_bicicletas, int num_bicicletas_max, int r) {
         super();
         this.agent = agent;
         this.position = position;
@@ -20,6 +20,7 @@ public class InfoEstacao implements java.io.Serializable {
         this.num_bicicletas_max = num_bicicletas_max;
         this.nRequisicoes=0;
         this.nDevolucoes=0;
+        this.raio = r;
     }
 
     public AID getAgent() {
@@ -28,6 +29,10 @@ public class InfoEstacao implements java.io.Serializable {
 
     public void setAgent(AID agent) {
         this.agent = agent;
+    }
+
+    public int getNumEstacao(){
+        return Integer.parseInt(this.agent.getLocalName().substring(this.agent.getLocalName().length() - 1));
     }
 
     public Posicao getPosition() {

@@ -35,6 +35,10 @@ public class InfoUtilizador implements java.io.Serializable {
         return agent;
     }
 
+    public int getNumUser(){
+        return Integer.parseInt(this.agent.getLocalName().substring(this.agent.getLocalName().length() - 1));
+    }
+
     public Posicao getInit() {
         return init;
     }

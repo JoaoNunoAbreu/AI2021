@@ -107,6 +107,51 @@ public class Mapa implements java.io.Serializable{
         return res;
     }
 
+    public String showMapa(){
+        List<List<String>> res = new ArrayList<>();
+        StringBuilder separator = new StringBuilder();
+        for(int i = 0; i < this.size; i++){
+            List<String> tmp = new ArrayList<>();
+            for(int j = 0; j < this.size; j++) {
+                tmp.add("--");
+            }
+            res.add(tmp);
+            separator.append("###");
+        }
+        separator.append("###\n");
+
+        // ----------- Preencher mapa aqui -----------
+
+        for(InfoEstacao ea : this.estacoes){
+            int x = (int) ea.getPosition().getX();
+            int y = (int) ea.getPosition().getY();
+
+            res.get(x).set(y,"E" + ea.getNumEstacao());
+        }
+
+        for(InfoUtilizador iu: this.utilizadores){
+            int x = (int) iu.getAtual().getX();
+            int y = (int) iu.getAtual().getY();
+
+            res.get(x).set(y,"U" + iu.getNumUser());
+        }
+
+        // -------------------------------------------
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(separator.toString());
+        for (List<String> value : res) {
+            sb.append("# ");
+            for(String c : value) {
+                sb.append(c);
+                sb.append(" ");
+            }
+            sb.append("#\n");
+        }
+        sb.append(separator.toString());
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return "Mapa{\n" +

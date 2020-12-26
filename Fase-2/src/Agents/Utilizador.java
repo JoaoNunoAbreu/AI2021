@@ -1,4 +1,5 @@
 package Agents;
+import Util.IO;
 import Util.Incentivo;
 import Util.InfoUtilizador;
 import Util.Posicao;
@@ -24,14 +25,15 @@ public class Utilizador extends Agent {
 	private List<Posicao> estacoes;
 	private InfoUtilizador infoutilizador;
 	private int estacao_destino;
+	private IO io;
 
 	protected void setup() {
 		super.setup();
-		System.out.println("My name is "+ getLocalName());
+		this.io = new IO();
 		this.estacoes = (List<Posicao>) getArguments()[0];
 		this.addBehaviour(new Request());
 		this.addBehaviour(new Reply());
-		this.addBehaviour(new AtualizaPosicao(this,10));
+		this.addBehaviour(new AtualizaPosicao(this,50));
 	}
 
 	protected void takeDown() {
@@ -82,15 +84,13 @@ public class Utilizador extends Agent {
 
 					mensagem.setContentObject(infoutilizador);
 					myAgent.send(mensagem);
-					System.out.println("Acabou um pedido de aluguer...");
 				}
 				else{
-					System.out.println("Não se fez aluguer");
+					io.writeToLogs("Estação está offline");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -130,7 +130,7 @@ public class Utilizador extends Agent {
 							// Apagar agente se for uma devolução
 							if(infoutilizador.getDest().equals(infoutilizador.getAtual())) {
 								myAgent.doDelete();
-								System.out.println(myAgent.getLocalName() + " foi apagado.");
+								io.writeToLogs(myAgent.getLocalName()+ " saiu do sistema");
 							}
 						}
 					}
@@ -145,7 +145,6 @@ public class Utilizador extends Agent {
 					}
 					// Devolução -> Faz novo pedido
 					else{
-						System.out.println("Novo pedido de devolução do " + myAgent.getLocalName());
 						sd.setType("estacao");
 						template.addServices(sd);
 						try {
@@ -161,6 +160,7 @@ public class Utilizador extends Agent {
 									}
 									if(Integer.parseInt(s) == estacao_destino) {
 										mensagem.addReceiver(result[i].getName());
+										io.writeToLogs(result[i].getName().getLocalName()+": "+ myAgent.getLocalName()+" reenviou pedido de devolução\n");
 									}
 								}
 								mensagem.setContentObject(infoutilizador);
@@ -177,19 +177,24 @@ public class Utilizador extends Agent {
 					try {
 						Incentivo i = (Incentivo) msg.getContentObject();
 						if(infoutilizador.aceitaIncentivo(i)) {
-							System.out.println(myAgent.getLocalName() + " aceitou o incentivo (" + infoutilizador.getIncentivo_max() + ") da posição " + infoutilizador.getDest());
+							io.writeToLogs(myAgent.getLocalName() + " aceitou o incentivo (" + infoutilizador.getIncentivo_max() + ") da posição " + infoutilizador.getDest());
 							String sender = msg.getSender().getLocalName();
 							estacao_destino = Integer.parseInt(String.valueOf(sender.charAt(sender.length() - 1)));
 						}
-						else
-							System.out.println(myAgent.getLocalName() + " rejeitou o incentivo (" + i.getIncentivo() + ") da posição " + i.getPosition());
+						else {
+							io.writeToLogs(myAgent.getLocalName() + " rejeitou o incentivo (" + i.getIncentivo() + ") da posição " + i.getPosition());
+						}
 					}
-					catch (UnreadableException e) {
+					catch (UnreadableException | IOException e) {
 						e.printStackTrace();
 					}
 				}
 				else{
-					System.out.println("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
+					try {
+						io.writeToLogs("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 			else {
@@ -215,7 +220,7 @@ public class Utilizador extends Agent {
 				if (infoutilizador.getAtual().equals(infoutilizador.getDest())) {
 
 					// Chegou ao destino
-					System.out.println("Chegou ao destino " + myAgent.getLocalName());
+					io.writeToLogs(myAgent.getLocalName()+": Chegou ao destino ");
 
 					sd.setType("estacao");
 					template.addServices(sd);

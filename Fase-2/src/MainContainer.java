@@ -90,17 +90,12 @@ public class MainContainer {
 				Thread.sleep(1000);
 			}
 			a.startAgentInPlatform("Agente Interface", "Agents.Interface");
-			Thread.sleep(5000);
+			Thread.sleep(1000);
 
 			for (int j = 0; j < SimulationConfig.NUM_UTILIZADORES; j++) {
 				a.startAgentUtilizadorInPlatform("Agente Utilizador " + j, "Agents.Utilizador");
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 			}
-
-
-
-
-
 
 		} catch (Exception e) {
 			e.printStackTrace();

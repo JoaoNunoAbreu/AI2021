@@ -1,4 +1,5 @@
 package Agents;
+import Util.IO;
 import Util.InfoEstacao;
 import Util.InfoUtilizador;
 import Util.Mapa;
@@ -18,10 +19,11 @@ import java.util.List;
 public class Central extends Agent {
 
 	private Mapa mapa;
+	private IO io;
 
 	protected void setup() {
 		super.setup();
-		System.out.println("My name is "+ getLocalName());
+		this.io = new IO();
 
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
@@ -38,7 +40,7 @@ public class Central extends Agent {
 
 		this.mapa = (Mapa) getArguments()[0];
 		this.addBehaviour(new Receiver());
-		this.addBehaviour(new SendMap(this,500));
+		this.addBehaviour(new SendMap(this,50));
 	}
 
 	protected void takeDown() {
@@ -53,16 +55,16 @@ public class Central extends Agent {
 				try {
 					if (msg.getPerformative() == ACLMessage.SUBSCRIBE) {
 						if(msg.getSender().getLocalName().contains("Estacao")){
-							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " registered!");
+							io.writeToLogs("***" + msg.getSender().getLocalName() + " registado! ***");
 							mapa.addNewEstacao((InfoEstacao) msg.getContentObject());
 						}
 						else if(msg.getSender().getLocalName().contains("Utilizador")){
-							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " registered!");
+							io.writeToLogs("*** " + msg.getSender().getLocalName() + " registado! ***");
 							mapa.addUtilizadores((InfoUtilizador) msg.getContentObject());
 							mapa.decrementaBicicleta((InfoUtilizador) msg.getContentObject());
 						}
 						else{
-							System.out.println("Chegou um subscribe inválido ao Central!");
+							io.writeToLogs(myAgent.getAID().getLocalName() + ": Subscribe inválido feito por" + msg.getSender().getLocalName());
 						}
 					}
 					else if(msg.getPerformative() == ACLMessage.INFORM) {

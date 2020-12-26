@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Fase-2:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -20,14 +25,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5b6aa13-7f29-460f-88f8-b15619f203d7" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Fase_2_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jade.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/APDescription.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Fase-2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Fase-2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MTPs-MainContainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MTPs-MainContainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$Receiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$SendMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$SendMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Receiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Register.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Register.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Interface$ReceiveMap.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Interface$ReceiveMap.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Interface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Interface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$AtualizaPosicao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$AtualizaPosicao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Reply.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Request.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Request.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/MainContainer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/MainContainer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/SimulationConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/SimulationConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Util/InfoEstacao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Util/InfoEstacao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Util/InfoUtilizador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Util/InfoUtilizador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Util/Mapa.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Util/Mapa.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Analyst$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Analyst$PedirLucro.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Analyst$ReceberQuery.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Analyst.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Customer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Seller$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Seller$ReceberPedidosEProdutos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Agents/Seller.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Behaviours/Comprarprodutos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Behaviours/ReceberConfirmacao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/Classes/Report.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/loja/MainContainer.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agents/Central.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Central.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agents/Estacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Estacao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agents/Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Interface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Agents/Utilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Utilizador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MainContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SimulationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SimulationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/InfoEstacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/InfoEstacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/InfoUtilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/InfoUtilizador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Mapa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Mapa.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,13 +102,15 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RunManager">
     <configuration name="MainContainer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -111,21 +154,33 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser/0.25.1920.1055@0.25.1920.1055" timestamp="1608652811696" />
-    <state width="1878" height="899" key="GridCell.Tab.0.bottom" timestamp="1608650709807">
+    <state x="790" y="347" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1608997955836">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="899" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709807" />
-    <state width="1878" height="899" key="GridCell.Tab.0.center" timestamp="1608650709806">
+    <state x="790" y="347" key="#com.intellij.ide.util.TreeClassChooserDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1608997955836" />
+    <state width="1878" height="331" key="GridCell.Tab.0.bottom" timestamp="1609002895537">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="899" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709806" />
-    <state width="1878" height="899" key="GridCell.Tab.0.left" timestamp="1608650709803">
+    <state width="1878" height="331" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895537" />
+    <state width="1878" height="331" key="GridCell.Tab.0.center" timestamp="1609002895536">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="899" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709803" />
-    <state width="1878" height="899" key="GridCell.Tab.0.right" timestamp="1608650709806">
+    <state width="1878" height="331" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895536" />
+    <state width="1878" height="331" key="GridCell.Tab.0.left" timestamp="1609002895535">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="899" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1608650709806" />
+    <state width="1878" height="331" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895535" />
+    <state width="1878" height="331" key="GridCell.Tab.0.right" timestamp="1609002895536">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state width="1878" height="331" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895536" />
+    <state x="448" y="131" width="1209" height="843" key="SettingsEditor" timestamp="1608997976624">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="448" y="131" width="1209" height="843" key="SettingsEditor/0.25.1920.1055@0.25.1920.1055" timestamp="1608997976624" />
+    <state x="625" y="259" width="670" height="676" key="search.everywhere.popup" timestamp="1608995411019">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="625" y="259" width="670" height="676" key="search.everywhere.popup/0.25.1920.1055@0.25.1920.1055" timestamp="1608995411019" />
   </component>
 </project>

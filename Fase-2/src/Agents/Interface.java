@@ -26,7 +26,6 @@ public class Interface extends Agent {
 
     protected void setup() {
         super.setup();
-        System.out.println("My name is "+ getLocalName());
 
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
@@ -59,7 +58,8 @@ public class Interface extends Agent {
                 try {
                     if (msg.getPerformative() == ACLMessage.INFORM) {
                         mapa = (Mapa) msg.getContentObject();
-                        System.out.println(mapa.toString());
+                        clearConsole();
+                        System.out.println(mapa.showMapa());
                     }
                     else{
                         System.out.println("Agente interface recebeu um pedido inválido!");
@@ -73,7 +73,6 @@ public class Interface extends Agent {
         }
     }
 
-
     private class GenerateStatistics extends TickerBehaviour {
         private DefaultCategoryDataset datasetEstacoes;
         private DefaultCategoryDataset datasetReqDev;
@@ -86,7 +85,6 @@ public class Interface extends Agent {
             this.datasetReqDev = new DefaultCategoryDataset();
             this.datasetE = new DefaultPieDataset();
             this.window = new ApplicationFrame("Statistics");
-
         }
 
         @Override
@@ -108,7 +106,6 @@ public class Interface extends Agent {
             chartPanel_estacao_chart.setPreferredSize( new java.awt.Dimension( 460 , 267 ) );
             window.getContentPane().add(chartPanel_estacao_chart, BorderLayout.SOUTH);
 
-
             datasetE.clear();
             for(InfoEstacao ie : mapa.getEstacoes2()){
                 datasetE.setValue(ie.getAgent().getLocalName(), ie.getNum_bicicletas());
@@ -127,7 +124,6 @@ public class Interface extends Agent {
                 datasetReqDev.addValue(mapa.getNDevolucoesPorEstacao(i),"Devoluções", "Estaçao "+i);
             }
 
-
             JFreeChart barChart = ChartFactory.createBarChart(
                     "Número de requisições e devoluções",
                     "Estação",
@@ -143,7 +139,10 @@ public class Interface extends Agent {
             this.window.setSize( 1024 , 768 );
             this.window.setVisible( true );
         }
+    }
 
-
+    public static void clearConsole(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

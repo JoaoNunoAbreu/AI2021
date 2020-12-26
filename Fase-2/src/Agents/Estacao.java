@@ -1,8 +1,5 @@
 package Agents;
-import Util.Incentivo;
-import Util.InfoEstacao;
-import Util.InfoUtilizador;
-import Util.Posicao;
+import Util.*;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -21,10 +18,11 @@ public class Estacao extends Agent {
 
 	private List<Posicao> estacoes;
 	private InfoEstacao infoestacao;
+	private IO io;
 
 	protected void setup() {
 		super.setup();
-		System.out.println("My name is "+ getLocalName());
+		this.io = new IO();
 
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
@@ -95,13 +93,13 @@ public class Estacao extends Agent {
 				if (result.length > 0) {
 					Posicao p = geraPosEstacao();
 					if(p == null){
-						System.out.println("Não foi possível criar esta estação...");
+						io.writeToLogs("Erro ao criar a " + myAgent.getLocalName());
 					}
 					else{
 						int num_bicicletas = (int) getArguments()[0];
 						int max_bicicletas = (int) getArguments()[3];
 
-						infoestacao = new InfoEstacao(myAgent.getAID(), p, num_bicicletas,max_bicicletas);
+						infoestacao = new InfoEstacao(myAgent.getAID(), p, num_bicicletas,max_bicicletas, (int) getArguments()[2] / 2);
 
 						ACLMessage msg = new ACLMessage(ACLMessage.SUBSCRIBE);
 						msg.setContentObject(infoestacao);
@@ -114,7 +112,7 @@ public class Estacao extends Agent {
 				}
 				// No Central is available - kill the agent!
 				else {
-					System.out.println(myAgent.getAID().getLocalName() + ": No Central available. Agent offline");
+					io.writeToLogs(myAgent.getAID().getLocalName() + ": No Central available. Agent offline");
 				}
 
 			} catch (IOException | FIPAException e) {
@@ -130,15 +128,16 @@ public class Estacao extends Agent {
 		public void action() {
 			ACLMessage msg = receive();
 			if (msg != null) {
-				if (msg.getPerformative() == ACLMessage.REQUEST) {
-					try {
+				try {
+					if (msg.getPerformative() == ACLMessage.REQUEST) {
+
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
 
 						if(infoutilizador.getInit().equals(infoestacao.getPosition())) {
-							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
+							io.writeToLogs(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
 
 							if (infoestacao.getNum_bicicletas() > 0) {
-								System.out.println(myAgent.getAID().getLocalName() + " - Aluguer aceite!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer aceite ao :"+ msg.getSender().getLocalName()+ "!");
 								infoestacao.decrement();
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.CONFIRM);
@@ -146,38 +145,35 @@ public class Estacao extends Agent {
 								myAgent.send(mensagem);
 
 							} else {
-								System.out.println(myAgent.getAID().getLocalName() + " - Aluguer rejeitado!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer rejeitado ao :"+ msg.getSender().getLocalName()+ "!");
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.REFUSE);
 								myAgent.send(mensagem);
 							}
 						}
 						else if(infoutilizador.getDest().equals(infoestacao.getPosition())) {
-							System.out.println(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
+							io.writeToLogs(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
 
 							if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {
-								System.out.println(myAgent.getAID().getLocalName() + " - Devolução aceite!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução aceite ao :"+ msg.getSender().getLocalName()+ "!");
 								infoestacao.increment();
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.CONFIRM);
 								myAgent.send(mensagem);
 							} else {
-								System.out.println(myAgent.getAID().getLocalName() + " - Devolução rejeitada!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução rejeitado à :"+ msg.getSender().getLocalName()+ "!");
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.REFUSE);
 								myAgent.send(mensagem);
 							}
 						}
 						else{
-							System.out.println("Estação recebeu request inválido.");
+							io.writeToLogs(myAgent.getAID().getLocalName()+" recebeu request inválido.");
 						}
-					} catch (UnreadableException e) {
-						e.printStackTrace();
+
 					}
-				}
-				else if (msg.getPerformative() == ACLMessage.INFORM){
-					// Envia incentivo ao utilizador que está na sua APE
-					try {
+					else if (msg.getPerformative() == ACLMessage.INFORM){
+						// Envia incentivo ao utilizador que está na sua APE
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
 						ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
 						Incentivo i = new Incentivo(infoestacao.getPosition(), infoestacao.incentivo());
@@ -185,12 +181,11 @@ public class Estacao extends Agent {
 						mensagem.addReceiver(infoutilizador.getAgent());
 						myAgent.send(mensagem);
 					}
-					catch (UnreadableException | IOException e) {
-						e.printStackTrace();
+					else{
+						io.writeToLogs("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
 					}
-				}
-				else{
-					System.out.println("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
+				} catch (UnreadableException | IOException e) {
+					e.printStackTrace();
 				}
 			}
 			else {
