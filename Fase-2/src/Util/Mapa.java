@@ -47,6 +47,7 @@ public class Mapa implements java.io.Serializable{
     public List<InfoEstacao> getEstacoes2(){
         return estacoes;
     }
+
     public int getNum_init_bicicletas() {
         return num_init_bicicletas;
     }

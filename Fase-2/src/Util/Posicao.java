@@ -18,14 +18,6 @@ public class Posicao implements Serializable {
         return y;
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
     public float distanceBetween(Posicao p2){
         return (float) Math.sqrt(((Math.pow((x - p2.x), 2)) + (Math.pow((y - p2.y), 2))));
     }

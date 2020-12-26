@@ -26,15 +26,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c5b6aa13-7f29-460f-88f8-b15619f203d7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Fase_2_jar/Fase-2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Fase_2_jar/Fase-2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Fase_2_jar/log.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Central$Receiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Estacao$Receiver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$AtualizaPosicao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$AtualizaPosicao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Reply.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Fase-2/Agents/Utilizador$Reply.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Agents/Central.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Central.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Agents/Estacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Estacao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Agents/Utilizador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Agents/Utilizador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/InfoEstacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/InfoEstacao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Mapa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Mapa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Util/Posicao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Util/Posicao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +56,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1lcR48iiNqx9jySPLqZohZ9ML3g" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -116,6 +112,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="697" y="358" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1609009655732">
+      <screen x="0" y="25" width="1920" height="1055" />
+    </state>
+    <state x="697" y="358" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1920.1055@0.25.1920.1055" timestamp="1609009655732" />
     <state x="773" y="263" key="#com.intellij.ide.util.MemberChooser" timestamp="1608652811696">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
@@ -124,22 +124,22 @@
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
     <state x="790" y="347" key="#com.intellij.ide.util.TreeClassChooserDialog/0.25.1920.1055@0.25.1920.1055" timestamp="1608997955836" />
-    <state width="1878" height="331" key="GridCell.Tab.0.bottom" timestamp="1609002895537">
+    <state width="1878" height="331" key="GridCell.Tab.0.bottom" timestamp="1609013543853">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="331" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895537" />
-    <state width="1878" height="331" key="GridCell.Tab.0.center" timestamp="1609002895536">
+    <state width="1878" height="331" key="GridCell.Tab.0.bottom/0.25.1920.1055@0.25.1920.1055" timestamp="1609013543853" />
+    <state width="1878" height="331" key="GridCell.Tab.0.center" timestamp="1609013543853">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="331" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895536" />
-    <state width="1878" height="331" key="GridCell.Tab.0.left" timestamp="1609002895535">
+    <state width="1878" height="331" key="GridCell.Tab.0.center/0.25.1920.1055@0.25.1920.1055" timestamp="1609013543853" />
+    <state width="1878" height="331" key="GridCell.Tab.0.left" timestamp="1609013543852">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="331" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895535" />
-    <state width="1878" height="331" key="GridCell.Tab.0.right" timestamp="1609002895536">
+    <state width="1878" height="331" key="GridCell.Tab.0.left/0.25.1920.1055@0.25.1920.1055" timestamp="1609013543852" />
+    <state width="1878" height="331" key="GridCell.Tab.0.right" timestamp="1609013543853">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>
-    <state width="1878" height="331" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1609002895536" />
+    <state width="1878" height="331" key="GridCell.Tab.0.right/0.25.1920.1055@0.25.1920.1055" timestamp="1609013543853" />
     <state x="448" y="131" width="1209" height="843" key="SettingsEditor" timestamp="1608997976624">
       <screen x="0" y="25" width="1920" height="1055" />
     </state>

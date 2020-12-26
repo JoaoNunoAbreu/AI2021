@@ -27,10 +27,6 @@ public class InfoEstacao implements java.io.Serializable {
         return agent;
     }
 
-    public void setAgent(AID agent) {
-        this.agent = agent;
-    }
-
     public int getNumEstacao(){
         return Integer.parseInt(this.agent.getLocalName().substring(this.agent.getLocalName().length() - 1));
     }
@@ -39,20 +35,8 @@ public class InfoEstacao implements java.io.Serializable {
         return position;
     }
 
-    public void setPosition(Posicao position) {
-        this.position = position;
-    }
-
     public int getNum_bicicletas() {
         return num_bicicletas;
-    }
-
-    public void setNum_bicicletas(int num_bicicletas) {
-        this.num_bicicletas = num_bicicletas;
-    }
-
-    public int getRaio() {
-        return raio;
     }
 
     public int getNum_bicicletas_max() {
