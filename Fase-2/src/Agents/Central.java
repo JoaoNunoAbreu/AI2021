@@ -53,9 +53,10 @@ public class Central extends Agent {
 			ACLMessage msg = receive();
 			if (msg != null) {
 				try {
+					// Pedido de registos (Estação e Utilizador)
 					if (msg.getPerformative() == ACLMessage.SUBSCRIBE) {
 						if(msg.getSender().getLocalName().contains("Estacao")){
-							io.writeToLogs("***" + msg.getSender().getLocalName() + " registado! ***");
+							io.writeToLogs("*** " + msg.getSender().getLocalName() + " registado! ***");
 							mapa.addNewEstacao((InfoEstacao) msg.getContentObject());
 						}
 						else if(msg.getSender().getLocalName().contains("Utilizador")){
@@ -67,6 +68,7 @@ public class Central extends Agent {
 							io.writeToLogs(myAgent.getAID().getLocalName() + ": Subscribe inválido feito por" + msg.getSender().getLocalName());
 						}
 					}
+					// Utilizador informa central da sua posição
 					else if(msg.getPerformative() == ACLMessage.INFORM) {
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
 
@@ -90,6 +92,7 @@ public class Central extends Agent {
 								myAgent.send(mensagem);
 							}
 						}
+						// Utilizador chega ao destino
 						else{
 							mapa.incrementaBicicleta((InfoUtilizador) msg.getContentObject());
 						}

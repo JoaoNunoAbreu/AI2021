@@ -70,6 +70,7 @@ public class Utilizador extends Agent {
 					infoutilizador = new InfoUtilizador(myAgent.getAID(), init, dest);
 					ACLMessage mensagem = new ACLMessage(ACLMessage.REQUEST);
 
+					// Faz pedido de aluguer e manda a mensagem para apenas a estação inicial.
 					for (int i = 0; i < result.length; ++i) {
 						Pattern p1 = Pattern.compile("\\d+");
 						Matcher m = p1.matcher(String.valueOf(result[i].getName()));
@@ -86,7 +87,7 @@ public class Utilizador extends Agent {
 					myAgent.send(mensagem);
 				}
 				else{
-					io.writeToLogs("Estação está offline");
+					io.writeToLogs("Estação " + estacao_destino + " está offline");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -130,7 +131,7 @@ public class Utilizador extends Agent {
 							// Apagar agente se for uma devolução
 							if(infoutilizador.getDest().equals(infoutilizador.getAtual())) {
 								myAgent.doDelete();
-								io.writeToLogs(myAgent.getLocalName()+ " saiu do sistema");
+								io.writeToLogs(myAgent.getLocalName()+ " saiu do sistema.");
 							}
 						}
 					}
@@ -160,7 +161,7 @@ public class Utilizador extends Agent {
 									}
 									if(Integer.parseInt(s) == estacao_destino) {
 										mensagem.addReceiver(result[i].getName());
-										io.writeToLogs(result[i].getName().getLocalName()+": "+ myAgent.getLocalName()+" reenviou pedido de devolução\n");
+										io.writeToLogs(result[i].getName().getLocalName()+" - "+ myAgent.getLocalName()+" reenviou pedido de devolução\n");
 									}
 								}
 								mensagem.setContentObject(infoutilizador);
@@ -177,12 +178,12 @@ public class Utilizador extends Agent {
 					try {
 						Incentivo i = (Incentivo) msg.getContentObject();
 						if(infoutilizador.aceitaIncentivo(i)) {
-							io.writeToLogs(myAgent.getLocalName() + " aceitou o incentivo (" + infoutilizador.getIncentivo_max() + ") da posição " + infoutilizador.getDest());
+							io.writeToLogs(myAgent.getLocalName() + " aceitou o incentivo (" + infoutilizador.getIncentivo_max() + ") da posição " + infoutilizador.getDest() + ".");
 							String sender = msg.getSender().getLocalName();
 							estacao_destino = Integer.parseInt(String.valueOf(sender.charAt(sender.length() - 1)));
 						}
 						else {
-							io.writeToLogs(myAgent.getLocalName() + " rejeitou o incentivo (" + i.getIncentivo() + ") da posição " + i.getPosition());
+							io.writeToLogs(myAgent.getLocalName() + " rejeitou o incentivo (" + i.getIncentivo() + ") da posição " + i.getPosition() + ".");
 						}
 					}
 					catch (UnreadableException | IOException e) {
@@ -220,7 +221,7 @@ public class Utilizador extends Agent {
 				if (infoutilizador.getAtual().equals(infoutilizador.getDest())) {
 
 					// Chegou ao destino
-					io.writeToLogs(myAgent.getLocalName()+": Chegou ao destino ");
+					io.writeToLogs(myAgent.getLocalName()+" chegou ao destino.");
 
 					sd.setType("estacao");
 					template.addServices(sd);

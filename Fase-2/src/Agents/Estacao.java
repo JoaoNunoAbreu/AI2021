@@ -112,7 +112,7 @@ public class Estacao extends Agent {
 				}
 				// No Central is available - kill the agent!
 				else {
-					io.writeToLogs(myAgent.getAID().getLocalName() + ": No Central available. Agent offline");
+					io.writeToLogs(myAgent.getAID().getLocalName() + " - No Central available. Agent offline");
 				}
 
 			} catch (IOException | FIPAException e) {
@@ -133,35 +133,43 @@ public class Estacao extends Agent {
 
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
 
+						// Se for pedido de aluguer
 						if(infoutilizador.getInit().equals(infoestacao.getPosition())) {
-							io.writeToLogs(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
+							io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
 
+							// Há bicicletas suficientes para alugar
 							if (infoestacao.getNum_bicicletas() > 0) {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer aceite ao :"+ msg.getSender().getLocalName()+ "!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer aceite a "+ msg.getSender().getLocalName()+ "!");
 								infoestacao.decrement();
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.CONFIRM);
 
 								myAgent.send(mensagem);
 
-							} else {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer rejeitado ao :"+ msg.getSender().getLocalName()+ "!");
+							}
+							// Não há bicicletas para alugar
+							else {
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer rejeitado a "+ msg.getSender().getLocalName()+ "!");
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.REFUSE);
 								myAgent.send(mensagem);
 							}
 						}
+						// Se for pedido de devolução
 						else if(infoutilizador.getDest().equals(infoestacao.getPosition())) {
-							io.writeToLogs(myAgent.getAID().getLocalName() + ": " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
+							io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
 
+							// Há espaço para mais uma bicicleta
 							if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução aceite ao :"+ msg.getSender().getLocalName()+ "!");
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução aceite a "+ msg.getSender().getLocalName()+ "!");
 								infoestacao.increment();
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.CONFIRM);
 								myAgent.send(mensagem);
-							} else {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução rejeitado à :"+ msg.getSender().getLocalName()+ "!");
+							}
+							// Não há espaço para mais nenhuma bicicleta
+							else {
+								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução rejeitado a "+ msg.getSender().getLocalName()+ "!");
 								ACLMessage mensagem = msg.createReply();
 								mensagem.setPerformative(ACLMessage.REFUSE);
 								myAgent.send(mensagem);
