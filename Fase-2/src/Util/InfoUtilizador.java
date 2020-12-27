@@ -2,6 +2,9 @@ package Util;
 
 import jade.core.AID;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class InfoUtilizador implements java.io.Serializable {
 
     private AID agent;
@@ -36,7 +39,12 @@ public class InfoUtilizador implements java.io.Serializable {
     }
 
     public int getNumUser(){
-        return Integer.parseInt(this.agent.getLocalName().substring(this.agent.getLocalName().length() - 1));
+        Pattern p1 = Pattern.compile("\\d+");
+        Matcher m = p1.matcher(String.valueOf(this.agent.getLocalName()));
+        String s = "";
+        if (m.find())
+            s = m.group();
+        return Integer.parseInt(s);
     }
 
     public Posicao getInit() {

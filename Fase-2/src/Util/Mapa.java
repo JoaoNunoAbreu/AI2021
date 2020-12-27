@@ -114,27 +114,34 @@ public class Mapa implements java.io.Serializable{
         for(int i = 0; i < this.size; i++){
             List<String> tmp = new ArrayList<>();
             for(int j = 0; j < this.size; j++) {
-                tmp.add("--");
+                tmp.add("---");
             }
             res.add(tmp);
-            separator.append("###");
+            separator.append("####");
         }
         separator.append("###\n");
 
         // ----------- Preencher mapa aqui -----------
 
+        int tmp;
         for(InfoEstacao ea : this.estacoes){
             int x = (int) ea.getPosition().getX();
             int y = (int) ea.getPosition().getY();
 
-            res.get(x).set(y,"E" + ea.getNumEstacao());
+            if(ea.getNumEstacao() < 10)
+                res.get(x).set(y,"E0" + ea.getNumEstacao());
+            else
+                res.get(x).set(y,"E" + ea.getNumEstacao());
         }
 
         for(InfoUtilizador iu: this.utilizadores){
             int x = (int) iu.getAtual().getX();
             int y = (int) iu.getAtual().getY();
 
-            res.get(x).set(y,"U" + iu.getNumUser());
+            if(iu.getNumUser() < 10)
+                res.get(x).set(y,"U0" + iu.getNumUser());
+            else
+                res.get(x).set(y,"U" + iu.getNumUser());
         }
 
         // -------------------------------------------

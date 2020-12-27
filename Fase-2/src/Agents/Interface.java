@@ -41,7 +41,7 @@ public class Interface extends Agent {
         }
 
         this.addBehaviour(new ReceiveMap());
-        this.addBehaviour(new GenerateStatistics(this,5000));
+        this.addBehaviour(new GenerateStatistics(this,1000));
     }
 
     protected void takeDown() {
