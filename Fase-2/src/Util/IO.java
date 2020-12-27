@@ -10,7 +10,7 @@ public class IO {
         logsFile = new File("log.log");
     }
 
-    public void writeToLogs (String s) throws IOException {
+    public void writeToLogs (String s) {
         BufferedWriter output = null;
         try {
             output = new BufferedWriter(new FileWriter(logsFile,true));
@@ -19,7 +19,11 @@ public class IO {
             e.printStackTrace();
         } finally {
             if ( output != null ) {
-                output.close();
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

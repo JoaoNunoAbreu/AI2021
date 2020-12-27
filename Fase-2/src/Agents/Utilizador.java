@@ -92,24 +92,19 @@ public class Utilizador extends Agent {
 		public void action() {
 			ACLMessage msg = receive();
 			if (msg != null) {
-				try {
-					switch (msg.getPerformative()) {
-						case ACLMessage.CONFIRM:
-							addBehaviour(new HandleConfirms());
-							break;
-						case ACLMessage.REFUSE:
-							addBehaviour(new HandleRefuses());
-							break;
-						case ACLMessage.INFORM:
-							addBehaviour(new HandleIncentivos(msg));
-							break;
-						default:
-							io.writeToLogs("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
-							break;
-					}
-				}
-				catch (Exception e) {
-					e.printStackTrace();
+				switch (msg.getPerformative()) {
+					case ACLMessage.CONFIRM:
+						addBehaviour(new HandleConfirms());
+						break;
+					case ACLMessage.REFUSE:
+						addBehaviour(new HandleRefuses());
+						break;
+					case ACLMessage.INFORM:
+						addBehaviour(new HandleIncentivos(msg));
+						break;
+					default:
+						io.writeToLogs("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
+						break;
 				}
 			}
 			else block();
