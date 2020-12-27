@@ -12,8 +12,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-
-import java.io.IOException;
 import java.util.List;
 
 public class Central extends Agent {
@@ -34,7 +32,7 @@ public class Central extends Agent {
 
 		try {
 			DFService.register(this, dfd);
-		} catch (FIPAException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -64,9 +62,7 @@ public class Central extends Agent {
 							mapa.addUtilizadores((InfoUtilizador) msg.getContentObject());
 							mapa.decrementaBicicleta((InfoUtilizador) msg.getContentObject());
 						}
-						else{
-							io.writeToLogs(myAgent.getAID().getLocalName() + ": Subscribe inválido feito por" + msg.getSender().getLocalName());
-						}
+						else io.writeToLogs(myAgent.getAID().getLocalName() + ": Subscribe inválido feito por" + msg.getSender().getLocalName());
 					}
 					// Utilizador informa central da sua posição
 					else if(msg.getPerformative() == ACLMessage.INFORM) {
@@ -93,12 +89,10 @@ public class Central extends Agent {
 							}
 						}
 						// Utilizador chega ao destino
-						else{
-							mapa.incrementaBicicleta((InfoUtilizador) msg.getContentObject());
-						}
+						else mapa.incrementaBicicleta((InfoUtilizador) msg.getContentObject());
 					}
 				}
-				catch (UnreadableException | IOException e) {
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -125,14 +119,14 @@ public class Central extends Agent {
 				DFAgentDescription[] result = DFService.search(myAgent, template);
 				if (result.length > 0) {
 					ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
-					for (int i = 0; i < result.length; ++i) {
+					for (int i = 0; i < result.length; ++i)
 						mensagem.addReceiver(result[i].getName());
-					}
+
 					mensagem.setContentObject(mapa);
 					myAgent.send(mensagem);
 				}
 			}
-			catch (FIPAException | IOException e) {
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -8,9 +8,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -33,7 +30,7 @@ public class Estacao extends Agent {
 
 		try {
 			DFService.register(this, dfd);
-		} catch (FIPAException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -46,7 +43,7 @@ public class Estacao extends Agent {
 		super.takeDown();
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	private class Register extends OneShotBehaviour {
 
@@ -92,9 +89,8 @@ public class Estacao extends Agent {
 				// If Central is available!
 				if (result.length > 0) {
 					Posicao p = geraPosEstacao();
-					if(p == null){
+					if(p == null)
 						io.writeToLogs("Erro ao criar a " + myAgent.getLocalName());
-					}
 					else{
 						int num_bicicletas = (int) getArguments()[0];
 						int max_bicicletas = (int) getArguments()[3];
@@ -104,24 +100,22 @@ public class Estacao extends Agent {
 						ACLMessage msg = new ACLMessage(ACLMessage.SUBSCRIBE);
 						msg.setContentObject(infoestacao);
 
-						for (int i = 0; i < result.length; ++i) {
+						for (int i = 0; i < result.length; ++i)
 							msg.addReceiver(result[i].getName());
-						}
+
 						myAgent.send(msg);
 					}
 				}
 				// No Central is available - kill the agent!
-				else {
+				else
 					io.writeToLogs(myAgent.getAID().getLocalName() + " - No Central available. Agent offline");
-				}
-
-			} catch (IOException | FIPAException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	// -----------------------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	private class Receiver extends CyclicBehaviour {
 
@@ -130,74 +124,131 @@ public class Estacao extends Agent {
 			if (msg != null) {
 				try {
 					if (msg.getPerformative() == ACLMessage.REQUEST) {
-
 						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
 
 						// Se for pedido de aluguer
-						if(infoutilizador.getInit().equals(infoestacao.getPosition())) {
-							io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
+						if(infoutilizador.getInit().equals(infoestacao.getPosition()))
+							addBehaviour(new HandlePedidoAluguer(msg));
 
-							// Há bicicletas suficientes para alugar
-							if (infoestacao.getNum_bicicletas() > 0) {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer aceite a "+ msg.getSender().getLocalName()+ "!");
-								infoestacao.decrement();
-								ACLMessage mensagem = msg.createReply();
-								mensagem.setPerformative(ACLMessage.CONFIRM);
-
-								myAgent.send(mensagem);
-
-							}
-							// Não há bicicletas para alugar
-							else {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer rejeitado a "+ msg.getSender().getLocalName()+ "!");
-								ACLMessage mensagem = msg.createReply();
-								mensagem.setPerformative(ACLMessage.REFUSE);
-								myAgent.send(mensagem);
-							}
-						}
 						// Se for pedido de devolução
-						else if(infoutilizador.getDest().equals(infoestacao.getPosition())) {
-							io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
+						else if(infoutilizador.getDest().equals(infoestacao.getPosition()))
+							addBehaviour(new HandlePedidoDevolucao(msg));
 
-							// Há espaço para mais uma bicicleta
-							if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução aceite a "+ msg.getSender().getLocalName()+ "!");
-								infoestacao.increment();
-								ACLMessage mensagem = msg.createReply();
-								mensagem.setPerformative(ACLMessage.CONFIRM);
-								myAgent.send(mensagem);
-							}
-							// Não há espaço para mais nenhuma bicicleta
-							else {
-								io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução rejeitado a "+ msg.getSender().getLocalName()+ "!");
-								ACLMessage mensagem = msg.createReply();
-								mensagem.setPerformative(ACLMessage.REFUSE);
-								myAgent.send(mensagem);
-							}
-						}
-						else{
+						else
 							io.writeToLogs(myAgent.getAID().getLocalName()+" recebeu request inválido.");
-						}
-
 					}
 					else if (msg.getPerformative() == ACLMessage.INFORM){
 						// Envia incentivo ao utilizador que está na sua APE
-						InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
-						ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
-						Incentivo i = new Incentivo(infoestacao.getPosition(), infoestacao.incentivo());
-						mensagem.setContentObject(i);
-						mensagem.addReceiver(infoutilizador.getAgent());
-						myAgent.send(mensagem);
+						addBehaviour(new EnviaIncentivo(msg));
 					}
-					else{
+					else
 						io.writeToLogs("Mensagem recebida no " + myAgent.getLocalName() + "tem erro no performative (" + msg.getPerformative() + ")");
-					}
-				} catch (UnreadableException | IOException e) {
+
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			else {
-				block();
+			else block();
+		}
+	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	private class HandlePedidoAluguer extends OneShotBehaviour{
+
+		private ACLMessage msg;
+
+		public HandlePedidoAluguer(ACLMessage msg) {
+			this.msg = msg;
+		}
+
+		@Override
+		public void action() {
+			try {
+				io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de aluguer!");
+
+				// Há bicicletas suficientes para alugar
+				if (infoestacao.getNum_bicicletas() > 0) {
+					io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer aceite a " + msg.getSender().getLocalName() + "!");
+					infoestacao.decrement();
+					ACLMessage mensagem = msg.createReply();
+					mensagem.setPerformative(ACLMessage.CONFIRM);
+
+					myAgent.send(mensagem);
+				}
+				// Não há bicicletas para alugar
+				else {
+					io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de aluguer rejeitado a " + msg.getSender().getLocalName() + "!");
+					ACLMessage mensagem = msg.createReply();
+					mensagem.setPerformative(ACLMessage.REFUSE);
+					myAgent.send(mensagem);
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	private class HandlePedidoDevolucao extends OneShotBehaviour{
+
+		private ACLMessage msg;
+
+		public HandlePedidoDevolucao(ACLMessage msg) {
+			this.msg = msg;
+		}
+
+		@Override
+		public void action() {
+			try{
+				io.writeToLogs(myAgent.getAID().getLocalName() + " - " + msg.getSender().getLocalName() + " fez um pedido de devolução!");
+
+				// Há espaço para mais uma bicicleta
+				if (infoestacao.getNum_bicicletas() < infoestacao.getNum_bicicletas_max()) {
+					io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução aceite a "+ msg.getSender().getLocalName()+ "!");
+					infoestacao.increment();
+					ACLMessage mensagem = msg.createReply();
+					mensagem.setPerformative(ACLMessage.CONFIRM);
+					myAgent.send(mensagem);
+				}
+				// Não há espaço para mais nenhuma bicicleta
+				else {
+					io.writeToLogs(myAgent.getAID().getLocalName() + " - Pedido de devolução rejeitado a "+ msg.getSender().getLocalName()+ "!");
+					ACLMessage mensagem = msg.createReply();
+					mensagem.setPerformative(ACLMessage.REFUSE);
+					myAgent.send(mensagem);
+				}
+			}
+			catch (Exception e){
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	private class EnviaIncentivo extends OneShotBehaviour{
+
+		private ACLMessage msg;
+
+		public EnviaIncentivo(ACLMessage msg) {
+			this.msg = msg;
+		}
+
+		@Override
+		public void action() {
+			try {
+				InfoUtilizador infoutilizador = (InfoUtilizador) msg.getContentObject();
+				ACLMessage mensagem = new ACLMessage(ACLMessage.INFORM);
+				Incentivo i = new Incentivo(infoestacao.getPosition(), infoestacao.incentivo());
+				mensagem.setContentObject(i);
+				mensagem.addReceiver(infoutilizador.getAgent());
+				myAgent.send(mensagem);
+			}
+			catch (Exception e){
+				e.printStackTrace();
 			}
 		}
 	}
