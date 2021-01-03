@@ -117,7 +117,7 @@ public class Interface extends Agent {
             ChartPanel chartPanel_estacoes_chart = new ChartPanel( estacoes_chart );
 
             chartPanel_estacoes_chart.setPreferredSize( new java.awt.Dimension( 460 , 267 ) );
-            window.getContentPane().add(chartPanel_estacoes_chart, BorderLayout.EAST);
+            window.getContentPane().add(chartPanel_estacoes_chart, BorderLayout.CENTER);
 
             for( int i=0; i <mapa.getEstacoes().size(); i++){
                 datasetReqDev.addValue(mapa.getNRequisicoesPorEstacao(i),"Requisições", "Estaçao "+i);
